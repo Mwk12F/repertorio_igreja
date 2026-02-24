@@ -5,10 +5,14 @@ app = Flask(__name__)
 
 BASE_DIR = os.path.join(app.root_path, "static", "pdfs")
 
+@app.route("/sobre")
+def sobre():
+    return render_template("sobre.html")
+
 @app.route("/")
 def index():
     if not os.path.exists(BASE_DIR):
-        return f"BASE_DIR: {BASE_DIR} <br> EXISTE? {os.path.exists(BASE_DIR)} <br> CONTEÚDO: {os.listdir(BASE_DIR) if os.path.exists(BASE_DIR) else 'Nada'}"
+        return "Pasta pdfs não encontrada!"
         
     momentos = [p for p in os.listdir(BASE_DIR) if os.path.isdir(os.path.join(BASE_DIR, p))]
     return render_template("index.html", momentos=momentos)
